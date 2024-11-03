@@ -24,7 +24,8 @@
             /* Ensure content can overflow */
             width: 100%;
             overflow-x: hidden;
-            /* Prevent horizontal scroll */
+            position: relative;
+            /* Ensure layering works correctly */
         }
 
         @keyframes gradientBG {
@@ -101,27 +102,23 @@
 
         .video-container {
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            width: auto;
+            width: 100%;
             height: auto;
             padding: 20px;
-            padding-bottom: 0px;
+            padding-bottom: 0;
             z-index: 3;
             position: relative;
         }
 
         .video-container video {
-            width: 100%;
-            /* Full width of the container */
             height: auto;
-            /* Adjust height automatically */
-            max-width: 90vw;
-            /* Limit maximum width to 90% of the viewport width */
-            max-height: 90vh;
-            /* Limit maximum height to 90% of the viewport height */
+            max-width: 80vw;
+            /* Adjust to ensure it fits within the landscape width */
+            max-height: 80vh;
+            /* Adjust to ensure it fits within the landscape height */
             object-fit: contain;
-            /* Ensures the content scales proportionally */
             border-radius: 50%;
             /* Keeps the video round */
             overflow: hidden;
