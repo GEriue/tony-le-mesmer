@@ -59,6 +59,21 @@
             /* Hide audio controls */
         }
 
+        #audio-toggle {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #61dafb;
+            color: #282c34;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #audio-toggle:hover {
+            background-color: #21a1f1;
+        }
+
         /* Responsive adjustments for smaller screens */
         @media (max-width: 768px) {
             h1 {
@@ -67,6 +82,11 @@
 
             p {
                 font-size: 1em;
+            }
+
+            #audio-toggle {
+                font-size: 0.9em;
+                padding: 8px 16px;
             }
         }
     </style>
@@ -81,10 +101,26 @@
         <video src="Tony.mp4" muted loop autoplay playsinline></video>
     </div>
 
-    <audio autoplay loop>
+    <audio id="background-audio" autoplay loop muted>
         <source src="audio.mp3" type="audio/mpeg">
         Your browser does not support the audio tag.
     </audio>
+
+    <button id="audio-toggle" onclick="toggleAudio()">Unmute Audio</button>
+
+    <script>
+        function toggleAudio() {
+            const audio = document.getElementById('background-audio');
+            const button = document.getElementById('audio-toggle');
+            if (audio.muted) {
+                audio.muted = false;
+                button.textContent = 'Mute Audio';
+            } else {
+                audio.muted = true;
+                button.textContent = 'Unmute Audio';
+            }
+        }
+    </script>
 
 </body>
 
