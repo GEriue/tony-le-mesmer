@@ -110,12 +110,18 @@
         }
 
         .video-container video {
-            width: calc(100% - 40px);
+            width: 100%;
+            /* Full width of the container */
             height: auto;
-            max-width: 460px;
-            max-height: 460px;
+            /* Adjust height automatically */
+            max-width: 90vw;
+            /* Limit maximum width to 90% of the viewport width */
+            max-height: 90vh;
+            /* Limit maximum height to 90% of the viewport height */
             object-fit: contain;
+            /* Ensures the content scales within the container */
             border-radius: 50%;
+            /* Keeps the video rounded */
             overflow: hidden;
         }
 
