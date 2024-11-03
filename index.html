@@ -21,6 +21,16 @@
             justify-content: center;
             flex-direction: column;
             text-align: center;
+            position: relative;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
 
         h1 {
@@ -83,7 +93,7 @@
 </head>
 
 <body>
-
+    <canvas id="background-canvas"></canvas>
     <h1>Tony Le Mesmer</h1>
     <p>CA: <strong></strong></p>
 
@@ -101,7 +111,6 @@
         // Play the audio when the page loads
         window.addEventListener('load', () => {
             audio.play().catch(() => {
-                // Handle autoplay policy issues by informing the user or prompting them to interact
                 document.getElementById('audio-toggle').textContent = '🔇 (Click to start audio)';
             });
         });
@@ -117,8 +126,38 @@
                 button.textContent = '🔇';
             }
         }
-    </script>
 
+        // Generative visual background effect
+        const canvas = document.getElementById('background-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const numShapes = 100;
+            for (let i = 0; i < numShapes; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const size = Math.random() * 20 + 5;
+                const hue = Math.random() * 360;
+                ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
 </body>
 
 </html>
