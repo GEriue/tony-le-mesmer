@@ -38,11 +38,9 @@
             flex-direction: column;
             align-items: center;
             width: calc(100% - 40px);
-            /* 20px margin on each side */
             height: auto;
             padding: 20px;
             box-sizing: border-box;
-            /* Ensures padding doesn’t affect container size */
         }
 
         .video-container video {
@@ -51,7 +49,6 @@
             max-width: 512px;
             max-height: 512px;
             object-fit: contain;
-            /* Ensures the video maintains its aspect ratio */
         }
 
         #audio-toggle {
@@ -95,30 +92,29 @@
         <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
     </div>
 
-    <audio id="background-audio" muted>
-        <source src="audio.mp3" type="audio/mpeg">
-        Your browser does not support the audio tag.
-    </audio>
-
     <script>
-        const audio = document.getElementById('background-audio');
-        audio.autoplay = true;
-        audio.loop = false; // Disable native loop to control it with JavaScript
+        // Create an audio object
+        const audio = new Audio('audio.mp3');
+        audio.loop = true;
+        audio.muted = true; // Start muted to comply with autoplay policies
 
-        // Listen for the 'ended' event and restart the audio immediately
-        audio.addEventListener('ended', function () {
-            audio.currentTime = 0;
-            audio.play();
+        // Play the audio when the page loads
+        window.addEventListener('load', () => {
+            audio.play().catch(() => {
+                // Handle autoplay policy issues by informing the user or prompting them to interact
+                document.getElementById('audio-toggle').textContent = '🔇 (Click to start audio)';
+            });
         });
 
         function toggleAudio() {
             const button = document.getElementById('audio-toggle');
             if (audio.muted) {
                 audio.muted = false;
-                button.textContent = '🔊'; // Sound on icon
+                audio.play(); // Ensure audio starts playing after unmuting
+                button.textContent = '🔊';
             } else {
                 audio.muted = true;
-                button.textContent = '🔇'; // Sound off icon
+                button.textContent = '🔇';
             }
         }
     </script>
