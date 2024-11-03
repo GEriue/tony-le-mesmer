@@ -12,7 +12,6 @@
         html {
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #1a2a6c, #0b3d91, #b21f1f, #fdbb2d);
-            /* Added dark blue (#0b3d91) */
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             color: white;
@@ -20,7 +19,6 @@
             padding: 0;
             height: 100%;
             width: 100%;
-            /* Ensures the background spans the full width */
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -29,7 +27,6 @@
             text-align: center;
             position: relative;
             z-index: 1;
-            /* Ensure the main content is visible above the background */
         }
 
         @keyframes gradientBG {
@@ -50,7 +47,7 @@
             font-family: 'Cinzel Decorative', cursive;
             font-size: 2.5em;
             margin: 0;
-            z-index: 2;
+            z-index: 3;
         }
 
         .contract-address {
@@ -58,7 +55,7 @@
             align-items: center;
             font-size: 1.2em;
             margin: 10px 0;
-            z-index: 2;
+            z-index: 3;
             cursor: pointer;
         }
 
@@ -79,7 +76,6 @@
             margin-top: 5px;
             font-size: 0.9em;
             color: #00ff00;
-            /* Green color for success */
         }
 
         .video-container {
@@ -90,7 +86,8 @@
             height: auto;
             padding: 20px;
             box-sizing: border-box;
-            z-index: 2;
+            z-index: 3;
+            position: relative;
         }
 
         .video-container video {
@@ -100,9 +97,7 @@
             max-height: 512px;
             object-fit: contain;
             border-radius: 50%;
-            /* Makes the video round */
             overflow: hidden;
-            /* Ensures video fits within the round shape */
         }
 
         #audio-toggle {
@@ -113,11 +108,23 @@
             color: #61dafb;
             border: none;
             cursor: pointer;
-            z-index: 2;
+            z-index: 3;
         }
 
         #audio-toggle:hover {
             color: #21a1f1;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            /* Ensure the particles are behind the main content */
+            pointer-events: none;
+            /* Allow clicks to pass through */
         }
 
         /* Responsive adjustments for smaller screens */
@@ -139,21 +146,22 @@
 
 <body>
 
+    <canvas id="particle-canvas"></canvas>
+
     <h1>Tony Le Mesmer</h1>
-    <p></p>
+
+    <div class="video-container">
+        <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
+        <video id="video-element" src="Tony.mp4" muted loop autoplay playsinline></video>
+    </div>
+
     <div class="contract-address" onclick="copyToClipboard()">
         <a href="https://pump.fun" target="_blank">
             <img src="pf.webp" alt="Icon">
         </a>
-        <span id="contract-text">CA: updating in a sec</span>
+        <span id="contract-text">CA: 0xYourContractAddressHere</span>
     </div>
-
     <div class="copy-message" id="copy-message">Contract copied</div>
-
-    <div class="video-container">
-        <video src="Tony.mp4" muted loop autoplay playsinline></video>
-        <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
-    </div>
 
     <script>
         // Create an audio object
@@ -193,6 +201,72 @@
                 console.error('Failed to copy: ', err);
             });
         }
+
+        // Particle effect setup
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 200;
+
+        function getVideoCenter() {
+            const video = document.getElementById('video-element');
+            const rect = video.getBoundingClientRect();
+            return {
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2
+            };
+        }
+
+        function createParticle() {
+            const center = getVideoCenter();
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 3 + 1;
+            const radius = Math.random() * 3 + 1;
+            return {
+                x: center.x + Math.cos(angle) * 200,
+                y: center.y + Math.sin(angle) * 200,
+                angle,
+                speed,
+                radius,
+                life: Math.random() * 100 + 100,
+                decay: 1
+            };
+        }
+
+        function updateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((particle, index) => {
+                particle.x += Math.cos(particle.angle) * particle.speed;
+                particle.y += Math.sin(particle.angle) * particle.speed;
+                particle.life--;
+                particle.speed *= particle.decay;
+
+                if (particle.life <= 0) {
+                    particles.splice(index, 1);
+                }
+
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${particle.life / 100 * 0.66})`;
+                ctx.fill();
+            });
+
+            if (particles.length < particleCount) {
+                particles.push(createParticle());
+            }
+
+            requestAnimationFrame(updateParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        updateParticles();
     </script>
 
 </body>
