@@ -130,15 +130,15 @@
         // Generative visual background effect
         const canvas = document.getElementById('background-canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            draw(); // Redraw on resize to keep the visuals consistent
         }
 
         window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); // Initial resize
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -156,7 +156,7 @@
             requestAnimationFrame(draw);
         }
 
-        draw();
+        draw(); // Start drawing animation
     </script>
 </body>
 
