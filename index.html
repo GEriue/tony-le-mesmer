@@ -3,38 +3,63 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1.0, width=device-width">
     <title>Tony Le Mesmer</title>
     <style>
-        body {
+        /* Basic styling for background and layout */
+        body,
+        html {
             font-family: Arial, sans-serif;
             background-color: #282c34;
             color: white;
-            text-align: center;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
         }
 
         h1 {
-            font-size: 3em;
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 10px 0;
         }
 
         .video-container {
+            width: 100%;
             display: flex;
             justify-content: center;
             margin-top: 20px;
         }
 
         .video-container video {
-            width: 800px;
-            /* Adjust size as needed */
+            width: 100%;
+            max-width: 800px;
             opacity: 0.85;
-            transition: opacity 0.3s;
         }
 
         audio {
             display: none;
             /* Hide audio controls */
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            p {
+                font-size: 1em;
+            }
         }
     </style>
 </head>
