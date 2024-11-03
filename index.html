@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tony Le Mesmer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
     <style>
         /* Full-screen animating gradient background */
         body,
         html {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background: linear-gradient(135deg, #1a2a6c, #0b3d91, #b21f1f, #fdbb2d);
+            /* Added dark blue (#0b3d91) */
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             color: white;
@@ -45,15 +47,39 @@
         }
 
         h1 {
+            font-family: 'Cinzel Decorative', cursive;
             font-size: 2.5em;
             margin: 0;
             z-index: 2;
         }
 
-        p {
+        .contract-address {
+            display: flex;
+            align-items: center;
             font-size: 1.2em;
             margin: 10px 0;
             z-index: 2;
+            cursor: pointer;
+        }
+
+        .contract-address a {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .contract-address img {
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+        }
+
+        .copy-message {
+            display: none;
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #00ff00;
+            /* Green color for success */
         }
 
         .video-container {
@@ -100,7 +126,7 @@
                 font-size: 2em;
             }
 
-            p {
+            .contract-address {
                 font-size: 1em;
             }
 
@@ -114,12 +140,20 @@
 <body>
 
     <h1>Tony Le Mesmer</h1>
-    <p>CA: <strong></strong></p>
+
 
     <div class="video-container">
-        <video src="Tony.mp4" muted loop autoplay playsinline></video>
         <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
+        <video src="Tony.mp4" muted loop autoplay playsinline></video>
     </div>
+
+    <div class="contract-address" onclick="copyToClipboard()">
+        <a href="https://pump.fun" target="_blank">
+            <img src="pf.webp" alt="Icon">
+        </a>
+        <span id="contract-text">CA: updating in a sec</span>
+    </div>
+    <div class="copy-message" id="copy-message">Contract copied</div>
 
     <script>
         // Create an audio object
@@ -144,6 +178,20 @@
                 audio.muted = true;
                 button.textContent = '🔇';
             }
+        }
+
+        // Copy contract address to clipboard and show message
+        function copyToClipboard() {
+            const contractText = document.getElementById('contract-text').innerText;
+            navigator.clipboard.writeText(contractText.replace('CA: ', '')).then(() => {
+                const copyMessage = document.getElementById('copy-message');
+                copyMessage.style.display = 'block';
+                setTimeout(() => {
+                    copyMessage.style.display = 'none';
+                }, 2000); // Hide the message after 2 seconds
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
         }
     </script>
 
