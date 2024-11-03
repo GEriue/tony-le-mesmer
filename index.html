@@ -11,12 +11,11 @@
         html {
             font-family: Arial, sans-serif;
             background-color: #6223D2;
-            /* $bgcolor */
+            /* Matches the background color in SCSS */
             color: white;
             margin: 0;
             padding: 0;
             height: 100%;
-            width: 100%;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -26,70 +25,93 @@
             position: relative;
         }
 
-        /* Radial gradient to fade edges of the viewport */
-        .overlay {
-            width: 100vw;
-            height: 100vh;
-            position: absolute;
-            z-index: 2;
-            background: radial-gradient(circle, transparent 0%, rgba(98, 35, 210, 0.15) 100%);
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            z-index: 3;
+            /* Ensure it stays above the background */
         }
 
-        /* Container for the animated shapes */
-        .container {
-            position: absolute;
-            top: 0;
-            left: 0;
+        p {
+            font-size: 1.2em;
+            margin: 10px 0;
+            z-index: 3;
+            /* Ensure it stays above the background */
+        }
+
+        .video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: calc(100% - 40px);
+            height: auto;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 3;
+            /* Ensure it stays above the background */
+        }
+
+        .video-container video {
             width: 100%;
-            height: 100%;
-            display: grid;
-            grid-template-columns: repeat(10, 10%);
-            grid-template-rows: repeat(6, 15%);
-            z-index: 1;
+            height: auto;
+            max-width: 512px;
+            max-height: 512px;
+            object-fit: contain;
         }
 
-        .shape {
-            width: 100px;
-            height: 115px;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
-            animation: moveShape 4s infinite;
-            opacity: 0.6;
+        #audio-toggle {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 1.5em;
+            background-color: transparent;
+            color: #61dafb;
+            border: none;
+            cursor: pointer;
+            z-index: 3;
+            /* Ensure it stays above the background */
         }
 
-        /* Animation for shapes */
-        @keyframes moveShape {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 0.8;
-            }
-
-            50% {
-                transform: translateY(-20px) scale(1.1);
-                opacity: 0.5;
-            }
-
-            100% {
-                transform: translateY(0) scale(1);
-                opacity: 0.8;
-            }
+        #audio-toggle:hover {
+            color: #21a1f1;
         }
+
+        /* Include generated CSS from SCSS here */
     </style>
 </head>
 
 <body>
-    <!-- Background overlay -->
-    <div class="overlay"></div>
 
-    <!-- Container for the animated shapes -->
+    <!-- Background Effect -->
+    <div class="overlay"></div>
     <div class="container">
-        <!-- Create multiple shapes with different colors -->
-        <div class="shape" style="background-color: hsl(320, 100%, 70%); animation-delay: 0s;"></div>
-        <div class="shape" style="background-color: hsl(240, 100%, 70%); animation-delay: 0.5s;"></div>
-        <div class="shape" style="background-color: hsl(160, 100%, 70%); animation-delay: 1s;"></div>
-        <div class="shape" style="background-color: hsl(80, 100%, 70%); animation-delay: 1.5s;"></div>
-        <!-- Add more shapes as needed for full coverage -->
+        <!-- Generate 60 SVG shapes -->
+        <script>
+            for (let x = 1; x < 60; x++) {
+                document.write(`
+                    <svg class="shape" viewBox="0 0 100 115" preserveAspectRatio="xMidYMin slice">
+                        <polygon points="" fill="none" stroke="hsl(320,100%,70%)" stroke-width="5">
+                            <animate attributeName="points" repeatCount="indefinite" dur="4s" begin="0s"
+                                from="50 57.5, 50 57.5, 50 57.5" to="50 -75, 175 126, -75 126" />
+                        </polygon>
+                        <polygon points="" fill="none" stroke="hsl(240,100%,70%)" stroke-width="5">
+                            <animate attributeName="points" repeatCount="indefinite" dur="4s" begin="1s"
+                                from="50 57.5, 50 57.5, 50 57.5" to="50 -75, 175 126, -75 126" />
+                        </polygon>
+                        <polygon points="" fill="none" stroke="hsl(160,100%,70%)" stroke-width="5">
+                            <animate attributeName="points" repeatCount="indefinite" dur="4s" begin="2s"
+                                from="50 57.5, 50 57.5, 50 57.5" to="50 -75, 175 126, -75 126" />
+                        </polygon>
+                        <polygon points="" fill="none" stroke="hsl(80,100%,70%)" stroke-width="5">
+                            <animate attributeName="points" repeatCount="indefinite" dur="4s" begin="3s"
+                                from="50 57.5, 50 57.5, 50 57.5" to="50 -75, 175 126, -75 126" />
+                        </polygon>
+                    </svg>
+                `);
+            }
+        </script>
     </div>
 
+    <!-- Main Content -->
     <h1>Tony Le Mesmer</h1>
     <p>CA: <strong></strong></p>
 
@@ -123,6 +145,7 @@
             }
         }
     </script>
+
 </body>
 
 </html>
