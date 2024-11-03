@@ -49,10 +49,30 @@
         }
 
         h1 {
+            display: inline-flex;
             font-family: 'Cinzel Decorative', cursive;
             font-size: 2.5em;
             margin: 0;
             z-index: 3;
+        }
+
+        h1 span {
+            display: inline-block;
+            animation: wave 2.5s infinite ease-in-out;
+            animation-delay: calc(var(--i) * 0.15s);
+            /* Apply delay based on the index */
+        }
+
+        @keyframes wave {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .contract-address {
@@ -90,6 +110,7 @@
             width: calc(100% - 40px);
             height: auto;
             padding: 20px;
+            padding-bottom: 0px;
             box-sizing: border-box;
             z-index: 3;
             position: relative;
@@ -106,14 +127,19 @@
         }
 
         #audio-toggle {
-            margin-top: 10px;
-            padding: 10px;
-            font-size: 1.5em;
+            padding: 12px;
+            font-size: 2em;
             background-color: transparent;
             color: #61dafb;
             border: none;
             cursor: pointer;
             z-index: 3;
+        }
+
+        #quote {
+            padding-top: 4px;
+            font-size: 1.1em;
+            color: #61dafb;
         }
 
         #audio-toggle:hover {
@@ -153,7 +179,15 @@
 
     <div class="container">
         <p></p>
-        <h1>Tony Le Mesmer</h1>
+        <h1>
+            <span style="--i: 0">T</span><span style="--i: 1">o</span><span style="--i: 2">n</span><span
+                style="--i: 3">y</span>
+            <span>&nbsp; </span>
+            <span style="--i: 4">L</span><span style="--i: 5">e</span>
+            <span>&nbsp; </span>
+            <span style="--i: 6">M</span><span style="--i: 7">e</span><span style="--i: 8">s</span><span
+                style="--i: 9">m</span><span style="--i: 10">e</span><span style="--i: 11">r</span>
+        </h1>
         <p></p>
         <!-- <div class="contract-address" onclick="copyToClipboard()">
             <a href="https://pump.fun" target="_blank">
@@ -168,7 +202,12 @@
         <div>
             <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
         </div>
+        <div id="quote" style="font-style: italic;">
+            "We are all Shaman on a spiritual quest, and we travel on this journey using the energy of the life force".
+        </div>
     </div>
+
+
 
     <script>
         // Create an audio object
