@@ -5,29 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tony Le Mesmer</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Include the compiled SCSS as a separate CSS file -->
     <style>
-        /* Basic styling for the main content */
+        /* Basic styling for background and layout */
         body,
         html {
             font-family: Arial, sans-serif;
+            background-color: #282c34;
+            color: white;
             margin: 0;
             padding: 0;
             height: 100%;
             overflow: hidden;
-            position: relative;
-        }
-
-        .main-content {
-            position: relative;
-            z-index: 2;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            color: white;
+            flex-direction: column;
             text-align: center;
+            position: relative;
         }
 
         h1 {
@@ -66,8 +60,6 @@
             color: #61dafb;
             border: none;
             cursor: pointer;
-            z-index: 3;
-            /* Ensure it stays above the background */
         }
 
         #audio-toggle:hover {
@@ -93,39 +85,12 @@
 
 <body>
 
-    <!-- Background Effect -->
-    <div class="overlay"></div>
-    <div class="container">
-        <!-- Add SVG elements here according to the original effect -->
-        <svg class="shape" viewBox="0 0 100 115" preserveAspectRatio="xMidYMin slice">
-            <polygon points="" fill="none" stroke="hsl(320,100%,70%)" stroke-width="5">
-                <animate attributeName="points" repeatCount="indefinite" dur="4s" begin="0s"
-                    from="50 57.5, 50 57.5, 50 57.5" to="50 -75, 175 126, -75 126" />
-            </polygon>
-            <polygon points="" fill="none" stroke="hsl(240,100%,70%)" stroke-width="5">
-                <animate attributeName="points" repeatCount="indefinite" dur="4s" begin="1s"
-                    from="50 57.5, 50 57.5, 50 57.5" to="50 -75, 175 126, -75 126" />
-            </polygon>
-            <polygon points="" fill="none" stroke="hsl(160,100%,70%)" stroke-width="5">
-                <animate attributeName="points" repeatCount="indefinite" dur="4s" begin="2s"
-                    from="50 57.5, 50 57.5, 50 57.5" to="50 -75, 175 126, -75 126" />
-            </polygon>
-            <polygon points="" fill="none" stroke="hsl(80,100%,70%)" stroke-width="5">
-                <animate attributeName="points" repeatCount="indefinite" dur="4s" begin="3s"
-                    from="50 57.5, 50 57.5, 50 57.5" to="50 -75, 175 126, -75 126" />
-            </polygon>
-        </svg>
-    </div>
+    <h1>Tony Le Mesmer</h1>
+    <p>CA: <strong></strong></p>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <h1>Tony Le Mesmer</h1>
-        <p>CA: <strong></strong></p>
-
-        <div class="video-container">
-            <video src="Tony.mp4" muted loop autoplay playsinline></video>
-            <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
-        </div>
+    <div class="video-container">
+        <video src="Tony.mp4" muted loop autoplay playsinline></video>
+        <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
     </div>
 
     <script>
