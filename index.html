@@ -35,11 +35,11 @@
 
         .video-container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             width: calc(100% - 40px);
             /* 20px margin on each side */
-            height: calc(100% - 40px);
+            height: auto;
             padding: 20px;
             box-sizing: border-box;
             /* Ensures padding doesn’t affect container size */
@@ -54,13 +54,8 @@
             /* Ensures the video maintains its aspect ratio */
         }
 
-        audio {
-            display: none;
-            /* Hide audio controls */
-        }
-
         #audio-toggle {
-            margin-top: 15px;
+            margin-top: 10px;
             padding: 10px;
             font-size: 1.5em;
             background-color: transparent;
@@ -97,18 +92,26 @@
 
     <div class="video-container">
         <video src="Tony.mp4" muted loop autoplay playsinline></video>
+        <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
     </div>
 
-    <audio id="background-audio" autoplay loop muted>
+    <audio id="background-audio" muted>
         <source src="audio.mp3" type="audio/mpeg">
         Your browser does not support the audio tag.
     </audio>
 
-    <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
-
     <script>
+        const audio = document.getElementById('background-audio');
+        audio.autoplay = true;
+        audio.loop = false; // Disable native loop to control it with JavaScript
+
+        // Listen for the 'ended' event and restart the audio immediately
+        audio.addEventListener('ended', function () {
+            audio.currentTime = 0;
+            audio.play();
+        });
+
         function toggleAudio() {
-            const audio = document.getElementById('background-audio');
             const button = document.getElementById('audio-toggle');
             if (audio.muted) {
                 audio.muted = false;
