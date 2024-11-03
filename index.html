@@ -6,15 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tony Le Mesmer</title>
     <style>
-        /* Basic styling for background and layout */
+        /* Basic styling for the background effect */
         body,
         html {
             font-family: Arial, sans-serif;
-            background-color: #282c34;
+            background-color: #6223D2;
+            /* $bgcolor */
             color: white;
             margin: 0;
             padding: 0;
             height: 100%;
+            width: 100%;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -24,23 +26,89 @@
             position: relative;
         }
 
-        canvas {
+        /* Radial gradient to fade edges of the viewport */
+        .overlay {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            z-index: 2;
+            background: radial-gradient(circle, transparent 0%, rgba(98, 35, 210, 0.15) 100%);
+        }
+
+        /* Container to provide grid layout */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(10, 200px);
+            /* $cols and $shapeWidth */
+            grid-template-rows: repeat(6, 230px);
+            /* $rows and $shapeHeight */
+            transform: translate(-3%, -4%);
+            /* Starting point bleeds off edge */
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            z-index: 1;
+        }
+
+        /* Individual shapes */
+        .shape {
+            width: 200px;
+            /* $shapeWidth */
+            height: 230px;
+            /* $shapeHeight */
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+            /* Hexagon shape */
+        }
+
+        .shape:nth-child(10n+1) {
+            transform: translate(-50%, -25%);
+        }
+
+        .shape:nth-child(20n+1) {
+            transform: translate(0%, -50%);
+        }
+
+        .shape:nth-child(30n+1) {
+            transform: translate(-50%, -75%);
+        }
+
+        .shape:nth-child(40n+1) {
+            transform: translate(0%, -100%);
+        }
+
+        .shape:nth-child(50n+1) {
+            transform: translate(-50%, -125%);
+        }
+
+        .shape:nth-child(60n+1) {
+            transform: translate(0%, -150%);
+        }
+
+        polygon {
+            animation: animatePolygon 4s infinite;
+        }
+
+        /* Animation for the shapes */
+        @keyframes animatePolygon {
+            from {
+                points: 50 57.5, 50 57.5, 50 57.5;
+            }
+
+            to {
+                points: 50 -75, 175 126, -75 126;
+            }
         }
 
         h1 {
             font-size: 2.5em;
             margin: 0;
+            z-index: 3;
         }
 
         p {
             font-size: 1.2em;
             margin: 10px 0;
+            z-index: 3;
         }
 
         .video-container {
@@ -51,6 +119,7 @@
             height: auto;
             padding: 20px;
             box-sizing: border-box;
+            z-index: 3;
         }
 
         .video-container video {
@@ -69,6 +138,7 @@
             color: #61dafb;
             border: none;
             cursor: pointer;
+            z-index: 3;
         }
 
         #audio-toggle:hover {
@@ -93,7 +163,21 @@
 </head>
 
 <body>
-    <canvas id="background-canvas"></canvas>
+    <!-- Background overlay -->
+    <div class="overlay"></div>
+
+    <!-- Container for the shapes -->
+    <div class="container">
+        <!-- Instantiate triangles -->
+        <svg class="shape" viewBox="0 0 100 115" preserveAspectRatio="xMidYMin slice">
+            <polygon fill="none" stroke="hsl(320,100%,70%)" stroke-width="5" points="">
+                <animate attributeName="points" repeatCount="indefinite" dur="4s" from="50 57.5, 50 57.5, 50 57.5"
+                    to="50 -75, 175 126, -75 126"></animate>
+            </polygon>
+        </svg>
+        <!-- Additional shapes can be duplicated as needed -->
+    </div>
+
     <h1>Tony Le Mesmer</h1>
     <p>CA: <strong></strong></p>
 
@@ -126,57 +210,6 @@
                 button.textContent = '🔇';
             }
         }
-
-        // Background effect (adapted from CodePen)
-        const canvas = document.getElementById('background-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let dots = [];
-        const numDots = 100;
-
-        function createDots() {
-            for (let i = 0; i < numDots; i++) {
-                dots.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 3 + 1,
-                    dx: (Math.random() - 0.5) * 2,
-                    dy: (Math.random() - 0.5) * 2
-                });
-            }
-        }
-
-        function drawDots() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#ffffff';
-            dots.forEach(dot => {
-                ctx.beginPath();
-                ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
-                ctx.fill();
-            });
-            updateDots();
-            requestAnimationFrame(drawDots);
-        }
-
-        function updateDots() {
-            dots.forEach(dot => {
-                dot.x += dot.dx;
-                dot.y += dot.dy;
-
-                if (dot.x < 0 || dot.x > canvas.width) dot.dx *= -1;
-                if (dot.y < 0 || dot.y > canvas.height) dot.dy *= -1;
-            });
-        }
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        createDots();
-        drawDots();
     </script>
 </body>
 
