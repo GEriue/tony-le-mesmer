@@ -61,17 +61,16 @@
 
         #audio-toggle {
             margin-top: 15px;
-            padding: 10px 20px;
-            font-size: 1em;
-            background-color: #61dafb;
-            color: #282c34;
+            padding: 10px;
+            font-size: 1.5em;
+            background-color: transparent;
+            color: #61dafb;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
         }
 
         #audio-toggle:hover {
-            background-color: #21a1f1;
+            color: #21a1f1;
         }
 
         /* Responsive adjustments for smaller screens */
@@ -85,8 +84,7 @@
             }
 
             #audio-toggle {
-                font-size: 0.9em;
-                padding: 8px 16px;
+                font-size: 1.2em;
             }
         }
     </style>
@@ -106,7 +104,7 @@
         Your browser does not support the audio tag.
     </audio>
 
-    <button id="audio-toggle" onclick="toggleAudio()">Unmute Audio</button>
+    <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
 
     <script>
         function toggleAudio() {
@@ -114,10 +112,10 @@
             const button = document.getElementById('audio-toggle');
             if (audio.muted) {
                 audio.muted = false;
-                button.textContent = 'Mute Audio';
+                button.textContent = '🔊'; // Sound on icon
             } else {
                 audio.muted = true;
-                button.textContent = 'Unmute Audio';
+                button.textContent = '🔇'; // Sound off icon
             }
         }
     </script>
