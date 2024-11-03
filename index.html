@@ -119,10 +119,12 @@
             max-height: 90vh;
             /* Limit maximum height to 90% of the viewport height */
             object-fit: contain;
-            /* Ensures the content scales within the container */
+            /* Ensures the content scales proportionally */
             border-radius: 50%;
-            /* Keeps the video rounded */
+            /* Keeps the video round */
             overflow: hidden;
+            aspect-ratio: 1 / 1;
+            /* Ensures the video stays a perfect circle */
         }
 
         #audio-toggle {
