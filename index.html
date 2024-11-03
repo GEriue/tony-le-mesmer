@@ -140,20 +140,20 @@
 <body>
 
     <h1>Tony Le Mesmer</h1>
-
-
-    <div class="video-container">
-        <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
-        <video src="Tony.mp4" muted loop autoplay playsinline></video>
-    </div>
-
+    <p></p>
     <div class="contract-address" onclick="copyToClipboard()">
         <a href="https://pump.fun" target="_blank">
             <img src="pf.webp" alt="Icon">
         </a>
         <span id="contract-text">CA: updating in a sec</span>
     </div>
+
     <div class="copy-message" id="copy-message">Contract copied</div>
+
+    <div class="video-container">
+        <video src="Tony.mp4" muted loop autoplay playsinline></video>
+        <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
+    </div>
 
     <script>
         // Create an audio object
