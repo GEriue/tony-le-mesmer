@@ -12,21 +12,17 @@
         html {
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #1a2a6c, #0b3d91, #b21f1f, #fdbb2d);
-            background-size: 400% 400%;
+            background-size: 300% 300%;
+            /* Adjust size for better scaling */
             animation: gradientBG 15s ease infinite;
             color: white;
             margin: 0;
             padding: 0;
-            height: 100%;
+            min-height: 100%;
+            /* Ensure content can overflow */
             width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
-            position: relative;
-            z-index: 1;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
         }
 
         @keyframes gradientBG {
@@ -41,6 +37,15 @@
             100% {
                 background-position: 0% 50%;
             }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 100vh;
         }
 
         h1 {
@@ -122,9 +127,7 @@
             width: 100%;
             height: 100%;
             z-index: 2;
-            /* Ensure the particles are behind the main content */
             pointer-events: none;
-            /* Allow clicks to pass through */
         }
 
         /* Responsive adjustments for smaller screens */
@@ -148,20 +151,24 @@
 
     <canvas id="particle-canvas"></canvas>
 
-    <h1>Tony Le Mesmer</h1>
-
-    <div class="video-container">
-        <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
-        <video id="video-element" src="Tony.mp4" muted loop autoplay playsinline></video>
+    <div class="container">
+        <p></p>
+        <h1>Tony Le Mesmer</h1>
+        <p></p>
+        <div class="contract-address" onclick="copyToClipboard()">
+            <a href="https://pump.fun" target="_blank">
+                <img src="pf.webp" alt="Icon">
+            </a>
+            <span id="contract-text">CA: coming soon</span>
+        </div>
+        <div class="copy-message" id="copy-message">Contract copied</div>
+        <div class="video-container">
+            <video id="video-element" src="Tony.mp4" muted loop autoplay playsinline></video>
+        </div>
+        <div>
+            <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
+        </div>
     </div>
-
-    <div class="contract-address" onclick="copyToClipboard()">
-        <a href="https://pump.fun" target="_blank">
-            <img src="pf.webp" alt="Icon">
-        </a>
-        <span id="contract-text">CA: 0xYourContractAddressHere</span>
-    </div>
-    <div class="copy-message" id="copy-message">Contract copied</div>
 
     <script>
         // Create an audio object
@@ -226,12 +233,12 @@
             const speed = Math.random() * 3 + 1;
             const radius = Math.random() * 3 + 1;
             return {
-                x: center.x + Math.cos(angle) * 200,
-                y: center.y + Math.sin(angle) * 200,
+                x: center.x + Math.cos(angle) * 20,
+                y: center.y + Math.sin(angle) * 20,
                 angle,
                 speed,
                 radius,
-                life: Math.random() * 100 + 100,
+                life: Math.random() * 200 + 100,
                 decay: 1
             };
         }
@@ -250,7 +257,7 @@
 
                 ctx.beginPath();
                 ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${particle.life / 100 * 0.66})`;
+                ctx.fillStyle = `rgba(255, 255, 255, ${particle.life / 100 * 0.75})`;
                 ctx.fill();
             });
 
