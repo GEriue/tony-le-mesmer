@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tony Le Mesmer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #282c34;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .video-container video {
+            width: 800px;
+            /* Adjust size as needed */
+            opacity: 0.85;
+            transition: opacity 0.3s;
+        }
+
+        audio {
+            display: none;
+            /* Hide audio controls */
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Tony Le Mesmer</h1>
+    <p>Contract Address: <strong>0xYourContractAddressHere</strong></p>
+
+    <div class="video-container">
+        <video src="Tony.mp4" muted loop autoplay playsinline></video>
+    </div>
+
+    <audio autoplay loop>
+        <source src="your-music-file.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+
+</body>
+
+</html>
