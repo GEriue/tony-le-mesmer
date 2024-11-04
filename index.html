@@ -68,34 +68,6 @@
             }
         }
 
-        .contract-address {
-            display: flex;
-            align-items: center;
-            font-size: 1.2em;
-            margin: 10px 0;
-            z-index: 3;
-            cursor: pointer;
-        }
-
-        .contract-address a {
-            display: inline-flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .contract-address img {
-            margin-right: 10px;
-            width: 24px;
-            height: 24px;
-        }
-
-        .copy-message {
-            display: none;
-            margin-top: 5px;
-            font-size: 0.9em;
-            color: #00ff00;
-        }
-
         .video-container {
             display: flex;
             justify-content: center;
@@ -159,10 +131,6 @@
                 font-size: 2em;
             }
 
-            .contract-address {
-                font-size: 1em;
-            }
-
             #audio-toggle {
                 font-size: 1.2em;
             }
@@ -184,7 +152,6 @@
                 style="--i: 9">m</span><span style="--i: 10">e</span><span style="--i: 11">r</span>
         </h1>
         <p></p>
-        <div class="copy-message" id="copy-message">Contract copied</div>
         <div class="video-container">
             <video id="video-element" src="Tony.mp4" muted loop autoplay playsinline></video>
         </div>
@@ -197,12 +164,10 @@
     </div>
 
     <script>
-        // Create an audio object
         const audio = new Audio('audio.mp3');
         audio.loop = true;
-        audio.muted = true; // Start muted to comply with autoplay policies
+        audio.muted = true;
 
-        // Play the audio when the page loads
         window.addEventListener('load', () => {
             audio.play().catch(() => {
                 document.getElementById('audio-toggle').textContent = '🔇 (Click to start audio)';
@@ -213,7 +178,7 @@
             const button = document.getElementById('audio-toggle');
             if (audio.muted) {
                 audio.muted = false;
-                audio.play(); // Ensure audio starts playing after unmuting
+                audio.play();
                 button.textContent = '🔊';
             } else {
                 audio.muted = true;
@@ -221,28 +186,13 @@
             }
         }
 
-        // Copy contract address to clipboard and show message
-        function copyToClipboard() {
-            const contractText = document.getElementById('contract-text').innerText;
-            navigator.clipboard.writeText(contractText.replace('CA: ', '')).then(() => {
-                const copyMessage = document.getElementById('copy-message');
-                copyMessage.style.display = 'block';
-                setTimeout(() => {
-                    copyMessage.style.display = 'none';
-                }, 2000); // Hide the message after 2 seconds
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
-        }
-
-        // Particle effect setup
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         const particles = [];
-        const particleCount = 200;
+        const particleCount = 300;
         let lastTime = -1;
 
         function getVideoCenter() {
@@ -259,21 +209,22 @@
             const videoWidth = video.clientWidth;
             const videoHeight = video.clientHeight;
             const angle = Math.random() * Math.PI * 2;
-            const speed = 0;
+            const speed = Math.random() * 1 + 1;
             const radius = Math.random() * 2 + 1;
+            const spawnRadius = Math.min(videoWidth, videoHeight) / 3;
             return {
-                x: center.x + Math.cos(angle) * (videoWidth / 2 - 20),
-                y: center.y + Math.sin(angle) * (videoHeight / 2 - 20),
+                x: center.x + Math.cos(angle) * (spawnRadius - 20),
+                y: center.y + Math.sin(angle) * (spawnRadius - 20),
                 angle,
                 speed,
                 radius,
-                life: Math.random() * 50 + 50,
-                accel: 0.2
+                life: Math.random() * 50 + 75,
+                accel: 0.15
             };
         }
 
         function updateParticles(timestamp) {
-            const deltaTime = lastTime == -1 ? 0 : (timestamp - lastTime) / 1000; // Time difference in seconds
+            const deltaTime = lastTime === -1 ? 0 : (timestamp - lastTime) / 1000;
             lastTime = timestamp;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -300,12 +251,10 @@
             requestAnimationFrame(updateParticles);
         }
 
-        // Start particle effect only after the video has loaded
         const video = document.getElementById('video-element');
-        // Wait for the video to be ready to play
         video.oncanplay = () => {
-            document.body.style.visibility = 'visible'; // Make the page visible
-            requestAnimationFrame(updateParticles); // Start the particle animation once the video is ready
+            document.body.style.visibility = 'visible';
+            requestAnimationFrame(updateParticles);
         };
 
         window.addEventListener('resize', () => {
