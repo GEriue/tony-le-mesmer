@@ -12,20 +12,16 @@
         html {
             font-family: Arial, sans-serif;
             background-color: black;
-            /* Base layer behind the gradient */
             background: linear-gradient(135deg, #1a2a6c, #0b3d91, #b21f1f, #fdbb2d);
             background-size: 400% 400%;
-            /* Adjust size for better scaling */
             animation: gradientBG 20s ease infinite;
             color: white;
             margin: 0;
             padding: 0;
             min-height: 100%;
-            /* Ensure content can overflow */
             width: 100%;
             overflow-x: hidden;
             position: relative;
-            /* Ensure layering works correctly */
         }
 
         @keyframes gradientBG {
@@ -46,7 +42,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Centers the content horizontally */
             width: 100%;
             min-height: 100vh;
         }
@@ -63,7 +58,6 @@
             display: inline-block;
             animation: wave 2s infinite ease-in-out;
             animation-delay: calc(var(--i) * 0.15s);
-            /* Apply delay based on the index */
         }
 
         @keyframes wave {
@@ -115,15 +109,11 @@
         .video-container video {
             height: auto;
             max-width: 80vw;
-            /* Adjust to ensure it fits within the landscape width */
             max-height: 80vh;
-            /* Adjust to ensure it fits within the landscape height */
             object-fit: contain;
             border-radius: 50%;
-            /* Keeps the video round */
             overflow: hidden;
             aspect-ratio: 1 / 1;
-            /* Ensures the video stays a perfect circle */
         }
 
         #audio-toggle {
@@ -191,14 +181,6 @@
                 style="--i: 9">m</span><span style="--i: 10">e</span><span style="--i: 11">r</span>
         </h1>
         <p></p>
-
-        <!-- <div class="contract-address" onclick="copyToClipboard()">
-            <a href="https://pump.fun" target="_blank">
-                <img src="pf.webp" alt="Icon">
-            </a>
-            <span id="contract-text">CA: Updating in a sec</span>
-        </div> -->
-
         <div class="copy-message" id="copy-message">Contract copied</div>
         <div class="video-container">
             <video id="video-element" src="Tony.mp4" muted loop autoplay playsinline></video>
@@ -210,8 +192,6 @@
             "We are all Shaman on a spiritual quest, and we travel on this journey using the energy of the life force".
         </div>
     </div>
-
-
 
     <script>
         // Create an audio object
@@ -260,6 +240,7 @@
 
         const particles = [];
         const particleCount = 200;
+        let lastTime = -1;
 
         function getVideoCenter() {
             const video = document.getElementById('video-element');
@@ -285,8 +266,6 @@
                 decay: 1
             };
         }
-
-        let lastTime = -1;
 
         function updateParticles(timestamp) {
             const deltaTime = lastTime == -1 ? 0 : (timestamp - lastTime) / 1000; // Time difference in seconds
@@ -316,12 +295,17 @@
             requestAnimationFrame(updateParticles);
         }
 
+        // Start particle effect only after the video has loaded
+        const video = document.getElementById('video-element');
+        // Wait for the video to be ready to play
+        video.oncanplay = () => {
+            requestAnimationFrame(updateParticles); // Start the particle animation once the video is ready
+        };
+
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
-
-        updateParticles();
     </script>
 
 </body>
