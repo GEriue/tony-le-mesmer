@@ -121,6 +121,7 @@
 
         #audio-icon {
             will-change: contents;
+            transition: opacity 0.3s ease-in-out;
         }
 
 
@@ -212,16 +213,23 @@
         });
 
         function toggleAudio() {
-            const button = document.getElementById('audio-toggle');
             const icon = document.getElementById('audio-icon');
-            if (audio.muted) {
-                audio.muted = false;
-                audio.play();
-                icon.outerHTML = '<i id="audio-icon" class="fa-solid fa-volume-up"></i>';
-            } else {
-                audio.muted = true;
-                icon.outerHTML = '<i id="audio-icon" class="fa-solid fa-volume-mute"></i>';
-            }
+            icon.style.opacity = 0; // Start fading out
+
+            setTimeout(() => {
+                if (audio.muted) {
+                    audio.muted = false;
+                    audio.play();
+                    icon.classList.remove('fa-volume-mute');
+                    icon.classList.add('fa-volume-up');
+                } else {
+                    audio.muted = true;
+                    icon.classList.remove('fa-volume-up');
+                    icon.classList.add('fa-volume-mute');
+                }
+
+                icon.style.opacity = 1; // Fade back in
+            }, 150); // Adjust the delay to synchronize with the transition duration
         }
 
         const canvas = document.getElementById('particle-canvas');
