@@ -13,6 +13,7 @@
     <meta name="twitter:title" content="Tony Le Mesmer on Solana" />
     <meta name="twitter:image" content="https://tony-le-mesmer.fun/Tony.jpg" />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Full-screen animating gradient background */
         body {
@@ -102,13 +103,19 @@
 
         #audio-toggle {
             padding: 12px;
-            font-size: 2em;
+            font-size: 2.5em;
             background-color: transparent;
-            color: #61dafb;
+            color: white;
             border: none;
             cursor: pointer;
             z-index: 3;
+            opacity: 0.75;
         }
+
+        #audio-toggle:hover {
+            opacity: 1;
+        }
+
 
         #quote {
             padding-top: 20px;
@@ -144,9 +151,6 @@
             }
         }
 
-        #audio-toggle:hover {
-            color: #21a1f1;
-        }
 
 
         /* Responsive adjustments for smaller screens */
@@ -180,7 +184,9 @@
             <video id="video-element" src="Tony.mp4" muted loop autoplay playsinline></video>
         </div>
         <div>
-            <button id="audio-toggle" onclick="toggleAudio()">🔇</button>
+            <button id="audio-toggle" onclick="toggleAudio()">
+                <i id="audio-icon" class="fa-solid fa-volume-mute"></i>
+            </button>
         </div>
         <div id="quote" style="font-style: italic;">
             "We are all Shaman on a spiritual quest, and we travel on this journey using the energy of the life force".
@@ -200,13 +206,18 @@
 
         function toggleAudio() {
             const button = document.getElementById('audio-toggle');
+            const icon = document.getElementById('audio-icon');
             if (audio.muted) {
                 audio.muted = false;
                 audio.play();
-                button.textContent = '🔊';
+                icon.classList.remove('fa-volume-mute', 'material-icons');
+                icon.classList.add('fa-volume-up'); // or 'volume_up' for Material Icons
+                icon.textContent = ''; // For Material Icons
             } else {
                 audio.muted = true;
-                button.textContent = '🔇';
+                icon.classList.remove('fa-volume-up', 'material-icons');
+                icon.classList.add('fa-volume-mute'); // or 'volume_off' for Material Icons
+                icon.textContent = ''; // For Material Icons
             }
         }
 
