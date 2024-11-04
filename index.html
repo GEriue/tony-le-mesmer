@@ -72,6 +72,9 @@
             display: inline-block;
             animation: wave 2s infinite ease-in-out;
             animation-delay: calc(var(--i) * 0.15s);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         @keyframes wave {
