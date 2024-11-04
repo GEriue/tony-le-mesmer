@@ -219,15 +219,6 @@
         const particleCount = 200;
         let lastTime = -1;
 
-        // function getVideoCenter() {
-        //     const video = document.getElementById('video-element');
-        //     const rect = video.getBoundingClientRect();
-        //     return {
-        //         x: Math.random() * window.innerWidth,
-        //         y: Math.random() * window.innerHeight,
-        //     };
-        // }
-
         function createParticle() {
             const startPos = {
                 x: Math.random() * window.innerWidth,
@@ -292,6 +283,14 @@
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+        });
+
+        document.addEventListener("visibilitychange", function () {
+            if (document.hidden) {
+                audio.pause(); // Pause audio when the tab is inactive
+            } else {
+                audio.play().catch(() => { }); // Resume audio when the tab becomes active
+            }
         });
     </script>
 
