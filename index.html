@@ -212,17 +212,12 @@
             if (audio.muted) {
                 audio.muted = false;
                 audio.play();
-                icon.classList.remove('fa-volume-mute', 'material-icons');
-                icon.classList.add('fa-volume-up'); // or 'volume_up' for Material Icons
-                icon.textContent = ''; // For Material Icons
+                icon.outerHTML = '<i id="audio-icon" class="fa-solid fa-volume-up"></i>';
             } else {
                 audio.muted = true;
-                icon.classList.remove('fa-volume-up', 'material-icons');
-                icon.classList.add('fa-volume-mute'); // or 'volume_off' for Material Icons
-                icon.textContent = ''; // For Material Icons
+                icon.outerHTML = '<i id="audio-icon" class="fa-solid fa-volume-mute"></i>';
             }
         }
-
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
