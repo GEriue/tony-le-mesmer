@@ -116,6 +116,11 @@
 
         #audio-toggle:hover {
             opacity: 1;
+            background-color: transparent;
+        }
+
+        #audio-icon {
+            will-change: contents;
         }
 
 
@@ -212,24 +217,10 @@
             if (audio.muted) {
                 audio.muted = false;
                 audio.play();
-                icon.classList.remove('fa-volume-mute');
-                icon.classList.add('fa-volume-up');
-
-                // Force repaint (optional)
-                button.style.display = 'none';
-                requestAnimationFrame(() => {
-                    button.style.display = 'inline-block';
-                });
+                icon.outerHTML = '<i id="audio-icon" class="fa-solid fa-volume-up"></i>';
             } else {
                 audio.muted = true;
-                icon.classList.remove('fa-volume-up');
-                icon.classList.add('fa-volume-mute');
-
-                // Force repaint (optional)
-                button.style.display = 'none';
-                requestAnimationFrame(() => {
-                    button.style.display = 'inline-block';
-                });
+                icon.outerHTML = '<i id="audio-icon" class="fa-solid fa-volume-mute"></i>';
             }
         }
 
