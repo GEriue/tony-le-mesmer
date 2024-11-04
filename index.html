@@ -106,14 +106,19 @@
             position: relative;
         }
 
+
+
         .video-container video {
             height: auto;
-            max-width: 80vw;
+            max-width: 50vw;
             max-height: 80vh;
             object-fit: contain;
             border-radius: 50%;
             overflow: hidden;
             aspect-ratio: 1 / 1;
+            box-shadow: 0 0 20vw rgba(255, 255, 255, 0.75);
+            /* Apply saturation effect */
+            /* Adds a shadow */
         }
 
         #audio-toggle {
@@ -132,7 +137,7 @@
             padding-left: 40px;
             padding-right: 40px;
             font-size: 1.1em;
-            color: #61dafb;
+            color: white;
             text-align: center;
         }
 
@@ -254,16 +259,16 @@
         function createParticle() {
             const center = getVideoCenter();
             const angle = Math.random() * Math.PI * 2;
-            const speed = Math.random() * 3 + 5;
+            const speed = Math.random() * 1 + 1;
             const radius = Math.random() * 2 + 1;
             return {
-                x: center.x + Math.cos(angle) * 20,
-                y: center.y + Math.sin(angle) * 20,
+                x: center.x + Math.cos(angle) * 256,
+                y: center.y + Math.sin(angle) * 256,
                 angle,
                 speed,
                 radius,
-                life: Math.random() * 100 + 100,
-                decay: 1
+                life: Math.random() * 50 + 50,
+                accel: 0.1
             };
         }
 
@@ -275,8 +280,8 @@
             particles.forEach((particle, index) => {
                 particle.x += Math.cos(particle.angle) * particle.speed * deltaTime * 60;
                 particle.y += Math.sin(particle.angle) * particle.speed * deltaTime * 60;
-                particle.life -= deltaTime * 60; // Adjust life decay with deltaTime
-                particle.speed *= particle.decay;
+                particle.life -= deltaTime * 60;
+                particle.speed += particle.accel * deltaTime * 60;
 
                 if (particle.life <= 0) {
                     particles.splice(index, 1);
